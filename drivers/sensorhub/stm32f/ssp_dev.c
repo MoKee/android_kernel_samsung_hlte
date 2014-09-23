@@ -656,13 +656,13 @@ static int ssp_resume(struct device *dev)
 	struct ssp_data *data = spi_get_drvdata(spi_dev);
 	enable_irq(data->iIrq);
 	func_dbg();
+	reset_mcu_quick(data);
 	enable_debug_timer(data);
 
 	if (SUCCESS != ssp_send_cmd(data, MSG2SSP_AP_STATUS_RESUME, 0))
 		pr_err("[SSP]: %s MSG2SSP_AP_STATUS_RESUME failed\n",
 			__func__);
 	data->uLastResumeState = MSG2SSP_AP_STATUS_RESUME;
-	toggle_mcu_reset(data);
 
 	return 0;
 }
